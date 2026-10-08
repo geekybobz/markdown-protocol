@@ -4,8 +4,11 @@
     {
       "label": "Markdown Protocol: Verify workspace",
       "type": "shell",
-      "command": "mdp",
-      "args": ["verify", "${workspaceFolder}"],
+      "command": "python3",
+      "args": ["scripts/verify_package.py"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
       "problemMatcher": {
         "owner": "markdown-protocol",
         "fileLocation": ["relative", "${workspaceFolder}"],

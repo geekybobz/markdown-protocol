@@ -4,23 +4,15 @@ Validate the exact changed collection in proportion to its complexity.
 
 ## Compact completion check
 
-- The result matches the reviewed proposal and preserves user edits.
-- The profile is no larger than necessary; every file has a distinct job and
-  one authoritative owner.
-- Rules, prerequisites, limitations, and dependable conclusions appear above
+- Match the reviewed proposal; preserve user edits and one owner per fact; give each file a distinct job.
+- Keep the smallest useful profile. Ensure rules, prerequisites, limitations, and dependable conclusions appear above
   the first `## Details`.
-- A Topic beyond roughly 30 compact lines or Front Door beyond roughly 60 lines
-  was reviewed for splitting; thresholds were treated as warnings.
-- Relative links, anchors, Home footers, and intentional Previous/Next pairs
-  resolve.
-- Typed connections use Parent, Prerequisite, Related, Next, or Deeper;
-  Parent/Deeper pairs agree, typed Next matches the footer, and prerequisites
-  are acyclic.
-- Structured properties are present only when consumed. If enabled, the
-  generated `INVENTORY.md` is current and the on-demand checker passes.
-- Essential meaning survives without diagrams, HTML, plugins, or generated
-  views. Every claimed renderer was actually checked.
-- Generated files identify their source and regeneration command.
+- Treat roughly 30 compact Topic lines or 60 Front Door lines as review warnings, not failures.
+- Resolve links, anchors, Home footers, and intentional Previous/Next pairs. Use only Parent, Prerequisite, Related,
+  Next, or Deeper; keep Parent/Deeper reciprocal, typed Next aligned with its footer, and prerequisites acyclic.
+- Use structured properties only when consumed. If enabled, rebuild and check `INVENTORY.md`.
+- Preserve essential meaning without diagrams, HTML, plugins, or generated views; verify every claimed renderer.
+- Make generated files identify their source and regeneration command.
 
 Use the package checker for a bounded collection when its checks apply:
 
@@ -28,8 +20,7 @@ Use the package checker for a bounded collection when its checks apply:
 mdp verify <collection-root>
 ```
 
-Report changed files, checks, renderer evidence, generated outputs, warnings,
-and anything skipped or unverified.
+Report changed files, checks, renderer evidence, generated outputs, warnings, and anything skipped or unverified.
 
 ## Details
 

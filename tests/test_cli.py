@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import sys
 import tempfile
-import tomllib
 import unittest
 from pathlib import Path
 
@@ -126,8 +126,10 @@ class CliTests(unittest.TestCase):
         version = self.run_cli("version")
         self.assertEqual(0, version.returncode)
         self.assertRegex(version.stdout, r"^mdp \d+\.\d+\.\d+")
-        metadata = tomllib.loads((PACKAGE / "pyproject.toml").read_text(encoding="utf-8"))
-        self.assertEqual(f"mdp {metadata['project']['version']}\n", version.stdout)
+        metadata = (PACKAGE / "pyproject.toml").read_text(encoding="utf-8")
+        project_version = re.search(r'^version\s*=\s*"([^"]+)"$', metadata, re.MULTILINE)
+        self.assertIsNotNone(project_version)
+        self.assertEqual(f"mdp {project_version.group(1)}\n", version.stdout)
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             (root / "README.md").write_text("# Collection\n", encoding="utf-8")
@@ -136,6 +138,45 @@ class CliTests(unittest.TestCase):
             payload = json.loads(doctor.stdout)
             self.assertEqual("markdown-protocol.doctor.v1", payload["schema"])
             self.assertTrue(payload["python_ok"])
+            self.assertIsNone(payload["workspace_match"])
+            self.assertEqual([], payload["warnings"])
+
+    def test_doctor_reports_matching_and_stale_workspace_sources(self) -> None:
+        current = self.run_cli("doctor", str(PACKAGE), "--format", "json")
+        self.assertEqual(0, current.returncode, current.stdout + current.stderr)
+        current_payload = json.loads(current.stdout)
+        self.assertTrue(current_payload["workspace_match"])
+        self.assertEqual([], current_payload["warnings"])
+
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "scripts").mkdir()
+            (root / "README.md").write_text("# Collection\n", encoding="utf-8")
+            (root / "pyproject.toml").write_text(
+                '[project]\nname = "markdown-protocol"\nversion = "0.2.0"\n',
+                encoding="utf-8",
+            )
+            (root / "scripts" / "markdown_protocol.py").write_text(
+                "# stale workspace source\n", encoding="utf-8"
+            )
+            stale = self.run_cli("doctor", str(root), "--format", "json")
+            self.assertEqual(0, stale.returncode, stale.stdout + stale.stderr)
+            stale_payload = json.loads(stale.stdout)
+            self.assertFalse(stale_payload["workspace_match"])
+            self.assertTrue(stale_payload["warnings"])
+            self.assertIn("differs from the workspace", stale_payload["warnings"][0])
+
+    def test_verify_html_links_flag_is_machine_readable(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "README.md").write_text(
+                '# Collection\n\n<a href="gone.md">Missing</a>\n\n---\n\n[⌂ Home](#collection)\n',
+                encoding="utf-8",
+            )
+            result = self.run_cli("verify", str(root), "--html-links", "--format", "json")
+            self.assertEqual(1, result.returncode)
+            payload = json.loads(result.stdout)
+            self.assertTrue(any(item["code"] == "MDP401" for item in payload["findings"]))
 
     def test_macos_vscode_profile_is_current_and_contains_reference_setup(self) -> None:
         builder = PACKAGE / "scripts" / "build_vscode_profile.py"

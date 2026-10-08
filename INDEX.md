@@ -48,7 +48,7 @@ result.
 
 | file | owns | load when |
 |---|---|---|
-| [core-protocol.md](references/core-protocol.md) | universal structure, ownership, portability, and footer rules | every Markdown task |
+| [core-protocol.md](references/core-protocol.md) | universal structure, ownership, portability, and footer rules | changing collection structure, ownership, or navigation |
 | [review-workflow.md](references/review-workflow.md) | proportional proposal and approval behavior | before a write |
 | [layouts.md](references/layouts.md) | adaptive single-file and collection structures | creating or reorganizing files |
 | [markdown-patterns.md](references/markdown-patterns.md) | formatting catalogue | choosing or learning a pattern |
@@ -87,6 +87,7 @@ Open only the example needed for the current question.
 ```text
 agents/openai.yaml    -> native UI metadata and invocation policy
 scripts/markdown_protocol.py -> on-demand bounded check and inventory generator
+scripts/verify_package.py -> complete package-local verification entrypoint
 assets/vscode/        -> auditable editor-profile sources and generated profile
 .vscode/              -> portable recommendations and package-local settings
 .markdownlint.jsonc   -> permissive portability and correctness checks

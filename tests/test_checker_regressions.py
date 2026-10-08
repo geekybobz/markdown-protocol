@@ -178,6 +178,37 @@ class CheckerRegressionTests(unittest.TestCase):
             self.write(root, "README.md", page("# Collection\n\n![Diagram](gone.png)", home="#collection"))
             self.assertIn("broken link: gone.png", self.messages(root))
 
+    def test_L10_local_html_anchor_links_are_checked_only_when_requested(self) -> None:
+        with self.collection() as temporary:
+            root = Path(temporary).resolve()
+            self.write(
+                root,
+                "README.md",
+                page('# Collection\n\n<a href="gone.md">Missing</a>', home="#collection"),
+            )
+            self.assert_clean(root)
+            self.assertIn("broken link: gone.md", self.messages(root, html_links=True))
+
+    def test_L11_html_anchor_check_handles_anchors_external_links_and_code(self) -> None:
+        with self.collection() as temporary:
+            root = Path(temporary).resolve()
+            self.write(
+                root,
+                "README.md",
+                page(
+                    """
+                    # Collection
+
+                    <A HREF="topic.md#target">Target</A>
+                    <a href=https://example.com>External</a>
+                    `<a href="gone.md">Example</a>`
+                    """,
+                    home="#collection",
+                ),
+            )
+            self.write(root, "topic.md", page("# Topic\n\n## Target"))
+            self.assert_clean(root, html_links=True)
+
     def test_I4_inventory_escapes_pipe_characters(self) -> None:
         with self.collection() as temporary:
             root = Path(temporary).resolve()

@@ -1,7 +1,6 @@
 # Review Workflow
 
-Use this workflow for Markdown writes. Scale the proposal to the impact; do not
-turn a small correction into an architecture exercise.
+Scale review to the write; do not turn a small correction into an architecture exercise.
 
 ## Compact workflow
 
@@ -13,22 +12,17 @@ turn a small correction into an architecture exercise.
 | Collection change | profile, files, ownership, navigation, portability, and checks |
 | Generated Markdown | canonical source, target, regeneration, and checks |
 
-Read-only explanation or review needs no write approval. Before a write:
+Before a write:
 
 1. Announce that Markdown Protocol applies.
 2. Inspect the relevant existing structure.
-3. Present the smallest proposal that exposes the real effect.
-4. Wait for agreement unless the user explicitly waives this local gate.
-5. Implement only the agreed design and preserve later user edits.
-6. Pause again before new files, changed ownership or profile, a new generated
-   view/plugin, or materially broader content or validation.
+3. Present the smallest proposal that exposes the effect and wait for agreement unless the user waives this local gate.
+4. Implement only the agreed design and preserve later user edits.
+5. Pause before new files, changed ownership/profile, a new generated view or plugin, or materially broader work.
 
-A review-gate waiver changes only this proposal pause. It never waives project
-instructions, permissions, destructive-action safeguards, or another skill's
-authority.
-
-When a proposal introduces a non-core or renderer-dependent technique, include
-an optional `Patterns used` line linking its gallery example. Omit the line for
+Read-only work needs no invented gate. A waiver changes only the proposal pause, not project instructions,
+permissions, safeguards, or another skill's authority. For a non-core or renderer-dependent technique, optionally
+link a gallery example under `Patterns used`. Omit the line for
 ordinary headings, prose, lists, and relative links.
 
 ## Details

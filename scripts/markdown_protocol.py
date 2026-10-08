@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -12,6 +13,7 @@ import unicodedata
 from collections import deque
 from dataclasses import asdict, dataclass
 from datetime import date
+from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote
 from urllib.error import URLError
@@ -35,7 +37,7 @@ CONNECTION_LINE_RE = re.compile(r"^[-*+]\s+([^:]+):\s*(.*?)\s*$")
 NEXT_FOOTER_RE = re.compile(r"\[Next →\]\(([^)]+)\)")
 PREVIOUS_FOOTER_RE = re.compile(r"\[← Previous\]\(([^)]+)\)")
 TAG_RE = re.compile(r"^(domain|use)/[a-z0-9][a-z0-9-]*(?:/[a-z0-9][a-z0-9-]*)*$")
-VERSION = "0.1.1"
+VERSION = "0.2.0"
 DEFAULT_VERSION_URL = (
     "https://raw.githubusercontent.com/geekybobz/markdown-protocol/main/pyproject.toml"
 )
@@ -54,6 +56,22 @@ class Connection:
     label: str
     raw_target: str
     resolved: Path
+
+
+class HtmlAnchorParser(HTMLParser):
+    """Collect quoted or unquoted href values from HTML anchor elements."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.targets: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag.casefold() != "a":
+            return
+        for name, value in attrs:
+            if name.casefold() == "href" and value is not None:
+                self.targets.append(value)
+                return
 
 
 def markdown_files(root: Path) -> list[Path]:
@@ -223,7 +241,17 @@ def link_destination(raw_target: str) -> str:
     return target.split(maxsplit=1)[0] if target else ""
 
 
-def local_links(path: Path, root: Path, text: str) -> list[tuple[str, str | None, Path]]:
+def is_external_target(target: str) -> bool:
+    return target.startswith("//") or bool(re.match(r"^[A-Za-z][A-Za-z0-9+.-]*:", target))
+
+
+def local_links(
+    path: Path,
+    root: Path,
+    text: str,
+    *,
+    include_html: bool = False,
+) -> list[tuple[str, str | None, Path]]:
     links: list[tuple[str, str | None, Path]] = []
     cleaned = without_inline_code(without_fenced_code(text))
     raw_targets = list(LINK_RE.findall(cleaned))
@@ -234,9 +262,14 @@ def local_links(path: Path, root: Path, text: str) -> list[tuple[str, str | None
         key = (reference or label).strip().casefold()
         if key in definitions:
             raw_targets.append(definitions[key])
+    if include_html:
+        parser = HtmlAnchorParser()
+        parser.feed(cleaned)
+        parser.close()
+        raw_targets.extend(parser.targets)
     for raw_target in raw_targets:
         target = link_destination(raw_target)
-        if target.startswith(("http://", "https://", "mailto:", "codex://")):
+        if is_external_target(target):
             continue
         file_part, separator, anchor = target.partition("#")
         if not file_part:
@@ -249,7 +282,7 @@ def local_links(path: Path, root: Path, text: str) -> list[tuple[str, str | None
 
 def resolve_local_target(path: Path, raw_target: str) -> Path | None:
     target = link_destination(raw_target)
-    if target.startswith(("http://", "https://", "mailto:", "codex://")):
+    if is_external_target(target):
         return None
     file_part = target.partition("#")[0]
     if not file_part:
@@ -511,6 +544,7 @@ def check_collection(
     inventory: str = "INVENTORY.md",
     reviewed_since: date | None = None,
     adoption: bool = False,
+    html_links: bool = False,
 ) -> list[Finding]:
     root = root.resolve()
     findings: list[Finding] = []
@@ -616,7 +650,7 @@ def check_collection(
                 )
             )
 
-        for raw, anchor, resolved in local_links(path, root, text):
+        for raw, anchor, resolved in local_links(path, root, text, include_html=html_links):
             if not resolved.exists():
                 findings.append(Finding("error", relative, f"broken link: {link_destination(raw)}", "MDP401"))
                 continue
@@ -995,6 +1029,51 @@ def version_key(value: str) -> tuple[int, ...]:
     return tuple(int(part) for part in value.split("."))
 
 
+def file_sha256(path: Path) -> str | None:
+    try:
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+    except OSError:
+        return None
+
+
+def workspace_source(root: Path) -> Path | None:
+    """Return an MDP source file only when root looks like its source checkout."""
+    metadata = root / "pyproject.toml"
+    candidate = root / "scripts" / "markdown_protocol.py"
+    if not metadata.is_file() or not candidate.is_file():
+        return None
+    try:
+        content = metadata.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return None
+    if not re.search(r'^name\s*=\s*["\']markdown-protocol["\']\s*$', content, re.MULTILINE):
+        return None
+    return candidate.resolve()
+
+
+def provenance_payload(root: Path, running_source: Path | None = None) -> dict[str, object]:
+    running = (running_source or Path(__file__)).resolve()
+    workspace = workspace_source(root)
+    running_hash = file_sha256(running)
+    workspace_hash = file_sha256(workspace) if workspace else None
+    workspace_match = None if workspace is None else bool(
+        running_hash and workspace_hash and running_hash == workspace_hash
+    )
+    warnings: list[str] = []
+    if workspace is not None and not workspace_match:
+        warnings.append(
+            "installed mdp source differs from the workspace; reinstall or refresh it explicitly"
+        )
+    return {
+        "source": str(running),
+        "source_sha256": running_hash,
+        "workspace_source": str(workspace) if workspace else None,
+        "workspace_sha256": workspace_hash,
+        "workspace_match": workspace_match,
+        "warnings": warnings,
+    }
+
+
 def print_findings(findings: list[Finding]) -> None:
     if not findings:
         print("PASS: Markdown Protocol check")
@@ -1013,6 +1092,11 @@ def main(argv: list[str] | None = None) -> int:
         command.add_argument("--require-properties", action="store_true")
         command.add_argument("--inventory", default="INVENTORY.md")
         command.add_argument("--format", choices=("text", "json"), default="text")
+        command.add_argument(
+            "--html-links",
+            action="store_true",
+            help="also verify local targets in HTML <a href> elements",
+        )
         command.add_argument(
             "--reviewed-since",
             type=iso_date,
@@ -1118,6 +1202,7 @@ def main(argv: list[str] | None = None) -> int:
             inventory=args.inventory,
             reviewed_since=args.reviewed_since,
             adoption=args.command == "adopt",
+            html_links=args.html_links,
         )
         if args.format == "json":
             print(json.dumps(findings_payload(findings), indent=2, sort_keys=True))
@@ -1148,12 +1233,17 @@ def main(argv: list[str] | None = None) -> int:
             "root_ok": root.is_dir(),
             "entry_ok": status_payload["entry"] is not None,
             "unreadable_files": status_payload["unreadable_files"],
+            **provenance_payload(root),
         }
         if args.format == "json":
             print(json.dumps(payload, indent=2, sort_keys=True))
         else:
             for key, value in payload.items():
+                if key == "warnings":
+                    continue
                 print(f"{key}: {value}")
+            for warning in payload["warnings"]:
+                print(f"WARNING: {warning}")
         return 0 if payload["python_ok"] and payload["root_ok"] else 1
 
     if args.command == "fix":

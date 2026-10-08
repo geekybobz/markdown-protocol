@@ -5,53 +5,45 @@ description: Use whenever requested work creates, edits, reviews, or restructure
 
 # Markdown Protocol
 
-Build a linked structure with compact entry points and optional depth. Keep
-dependable rules and facts compact.
+Build a linked structure with compact entry points and optional depth. Keep dependable rules and facts compact.
 
-## Load only what the task needs
+## Route only what the task needs
 
-Read only the operational head above `## Details`; continue for examples or
-reasoning only when needed.
+Read only the operational head above `## Details`; continue for examples or reasoning only when needed.
 
-- Every task: [core](references/core-protocol.md); before a write:
-  [review-workflow.md](references/review-workflow.md); before completion:
+- Before writing: [review-workflow.md](references/review-workflow.md). Before completion:
   [validation](references/validation.md).
-- Creating or reorganizing: [layouts](references/layouts.md). Formatting or
-  teaching: [patterns](references/markdown-patterns.md). Materially useful
-  visual: [visuals](references/visual-patterns.md).
-- Matching use case only: one [add-on routes](references/addons/routes.md). Properties,
-  typed connections, inventory, or checker only:
-  [structured inventory](references/structured-inventory.md). `deepen` or
-  `check` mode: [named commands](references/named-commands.md).
+- Creating or reorganizing a collection, ownership, or navigation:
+  [core](references/core-protocol.md) and [layouts](references/layouts.md).
+- Formatting or teaching: [patterns](references/markdown-patterns.md). Materially useful visual:
+  [visuals](references/visual-patterns.md).
+- Matching use case only: one of the [add-on routes](references/addons/routes.md).
+  Properties, typed connections, inventory, or checker only:
+  [structured inventory](references/structured-inventory.md). `deepen` or `check` mode:
+  [named commands](references/named-commands.md).
 
-Use [INDEX.md](INDEX.md) for orientation or maintenance; ordinary tasks do not
-require it. Open only the relevant formatting example, never the whole gallery.
+Use [INDEX.md](INDEX.md) for orientation or maintenance; ordinary tasks do not require it.
+Open only the relevant formatting example, never the whole gallery.
 
-## Core behavior
+## Rules
 
-- Activate for any requested Markdown write, including one inside another task;
-  `#> md_protocol`, `#> md_deepen`, and `#> md_check` select declared modes.
-  Reading Markdown as input alone is not activation.
-- Announce the protocol. Read-only review needs no invented write gate.
-- Before writing, inspect the relevant structure, propose in proportion to the
-  impact, and wait for agreement. Continue inside the approved design; pause
-  again only for material expansion.
-- Preserve useful conventions and later user edits. Choose the smallest layout
-  that keeps ownership and navigation clear.
-- Give every important fact one owner. Outer layers summarize and link.
-- Keep rules, prerequisites, limitations, and dependable conclusions above the
-  first `## Details`; deeper material may explain but never change them.
-- Prefer relative links and portable text. Every authored page ends with the
-  required Home footer; Previous and Next appear only for a real reading order.
-- Use structured inventory tooling only when the collection opts in. Keep the
-  authored Front Door or `INDEX.md` semantic.
-- Treat diagrams, mathematics, callouts, and plugins as renderer-dependent
-  until verified in the named environment, with portable meaning preserved.
-- Mark generated material and change its canonical source or generator.
+- Activate for any requested Markdown write, including one inside another task; `#> md_protocol`,
+  `#> md_deepen`, and `#> md_check` select declared modes. Reading Markdown as input alone is not activation.
+- Announce the protocol. Before writing, inspect the relevant structure, propose in proportion to impact,
+  and wait for agreement; read-only review needs no invented gate. Pause only for material expansion.
+- Preserve conventions and later user edits. Use the smallest clear layout and one owner per important fact;
+  outer layers summarize and link.
+- Put rules, prerequisites, limitations, and dependable conclusions above the first `## Details`;
+  deeper material may explain but never change them.
+- Prefer relative links and portable text. Every authored page ends with the Home footer;
+  use Previous and Next only for a real reading order.
+- Structured inventory is opt-in; the authored Front Door or `INDEX.md` stays semantic.
+  Generated material names its source and regeneration method; edit its canonical source or generator.
+- Treat diagrams, mathematics, callouts, HTML, and plugins as renderer-dependent until verified
+  in the named environment, with portable meaning preserved.
 
-When another skill owns the subject, it owns domain correctness. Markdown
-Protocol owns document architecture, navigation, portability, review, and
-Markdown-specific checks. It grants no authority to rewrite unrelated files,
+When another skill owns the subject, it owns domain correctness. Markdown Protocol owns document architecture,
+navigation, portability, review, and Markdown-specific checks. It grants no authority to rewrite unrelated files,
 install plugins, create a documentation site, or start background indexing.
 
 ---
