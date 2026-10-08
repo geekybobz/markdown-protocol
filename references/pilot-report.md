@@ -3,15 +3,15 @@
 ## In brief
 
 The Markdown Protocol package is its own first real pilot. It exercises a
-compact model entry, a human route map, focused references, optional deep
+compact operational entry, a navigation map, focused references, optional deep
 sections, add-ons, portable navigation, a renderer fixture, and deterministic
-checks without maintaining separate human and machine copies.
+checks without maintaining parallel audience-specific copies.
 
 ## Pilot questions
 
 | question | evidence |
 |---|---|
-| Can a model start compactly? | `SKILL.md` routes to only the reference needed for the task. |
+| Can ordinary work start compactly? | `SKILL.md` routes to only the reference needed for the task. |
 | Can a new reader orient without knowing the tree? | `INDEX.md` routes by intention and maps the package. |
 | Is explanatory depth optional? | Core rules remain above `## Details`; deeper explanations remain linked. |
 | Is each fact maintained once? | Outer layers summarize and link to the focused owner. |
@@ -21,7 +21,7 @@ checks without maintaining separate human and machine copies.
 
 ## Findings
 
-- The single layered structure works better than parallel human and machine
+- The single layered structure works better than parallel audience-specific
   documents: compact entry points and deeper explanations share one ownership
   graph.
 - The package is still usable as ordinary Markdown when VS Code extensions are

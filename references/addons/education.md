@@ -1,9 +1,9 @@
 # Education Add-on
 
 Use this add-on when the Markdown is meant to help a reader learn, revise, or
-understand unfamiliar material. The model analyzes the topic, audience,
-project, and existing notes; the user does not have to choose learning devices
-or design the presentation.
+understand unfamiliar material. Analyze the topic, audience, project, and
+existing notes; the user does not have to choose learning devices or design the
+presentation.
 
 ## Outcome
 
@@ -198,7 +198,7 @@ false certainty.
 
 When editing existing material, preserve the reader's established tone,
 deliberate terminology, and later manual edits. Improve ambiguity locally
-rather than rewriting the collection into a uniform model voice. If a style
+rather than rewriting the collection into a uniform generated voice. If a style
 change would be broad, include it in the reviewed proposal.
 
 ## Ownership and maintenance

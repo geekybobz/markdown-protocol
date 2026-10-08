@@ -1,8 +1,8 @@
 # Markdown Protocol Index
 
-A human-facing map for understanding and maintaining the Markdown Protocol
-package. Models performing ordinary Markdown work start from
-[SKILL.md](SKILL.md) and load only the reference required for the task.
+A route map for understanding and maintaining the Markdown Protocol package.
+Ordinary task execution starts from [SKILL.md](SKILL.md) and loads only the
+reference required for the task.
 
 ## Choose a route
 
@@ -29,8 +29,8 @@ package. Models performing ordinary Markdown work start from
 
 ```mermaid
 flowchart LR
-    Task[Model task] --> Skill[SKILL.md]
-    Reader[Human reader] --> Index[INDEX.md]
+    Task[Apply the protocol] --> Skill[SKILL.md]
+    Orient[Orient or maintain] --> Index[INDEX.md]
     Skill --> Core[Core references]
     Skill --> Addons[Selected add-on]
     Index --> Core
@@ -40,8 +40,9 @@ flowchart LR
     Addons --> Check
 ```
 
-Text version: `SKILL.md` is the compact machine entry, `INDEX.md` is the human
-map, focused references own the detail, and validation checks the result.
+Text version: `SKILL.md` is the compact operational entry, `INDEX.md` is the
+navigation map, focused references own the detail, and validation checks the
+result.
 
 ## Core references
 
@@ -50,7 +51,7 @@ map, focused references own the detail, and validation checks the result.
 | [core-protocol.md](references/core-protocol.md) | universal structure, ownership, portability, and footer rules | every Markdown task |
 | [review-workflow.md](references/review-workflow.md) | proportional proposal and approval behavior | before a write |
 | [layouts.md](references/layouts.md) | adaptive single-file and collection structures | creating or reorganizing files |
-| [markdown-patterns.md](references/markdown-patterns.md) | human formatting catalogue | choosing or learning a pattern |
+| [markdown-patterns.md](references/markdown-patterns.md) | formatting catalogue | choosing or learning a pattern |
 | [visual-patterns.md](references/visual-patterns.md) | diagram selection and fallbacks | when a visual materially helps |
 | [validation.md](references/validation.md) | structural and renderer-aware completion checks | before finishing |
 | [structured-inventory.md](references/structured-inventory.md) | optional property schema, inventory generation, and checker contract | when a collection opts into tooling |
@@ -70,7 +71,7 @@ map, focused references own the detail, and validation checks the result.
 | [runbooks.md](references/addons/runbooks.md) | verified operational procedures, stop conditions, and recovery |
 | [visual-extras.md](references/addons/visual-extras.md) | optional Markmap, Foam, and editable SVG views |
 | [slides.md](references/addons/slides.md) | source-linked Marp teaching and presentation decks |
-| [skill-package.md](references/addons/skill-package.md) | machine-efficient and human-navigable skill packages |
+| [skill-package.md](references/addons/skill-package.md) | compact and navigable skill packages |
 
 Add-ons may specialize presentation and validation. They do not replace the
 core invariants or the proportional review gate.
@@ -94,8 +95,8 @@ assets/vscode/        -> backup-first user keybinding template
 
 ## Maintenance boundaries
 
-- `SKILL.md` owns model selection, essential behavior, and selective routing.
-- `INDEX.md` owns human package navigation and this internal inventory.
+- `SKILL.md` owns selection metadata, essential behavior, and selective routing.
+- `INDEX.md` owns package navigation and this internal inventory.
 - Each focused reference owns the subject named by its title.
 - The pattern gallery owns its example sequence.
 - Repository registries own public discovery and activation metadata.

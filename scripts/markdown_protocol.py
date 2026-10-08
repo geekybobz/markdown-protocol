@@ -35,7 +35,7 @@ CONNECTION_LINE_RE = re.compile(r"^[-*+]\s+([^:]+):\s*(.*?)\s*$")
 NEXT_FOOTER_RE = re.compile(r"\[Next →\]\(([^)]+)\)")
 PREVIOUS_FOOTER_RE = re.compile(r"\[← Previous\]\(([^)]+)\)")
 TAG_RE = re.compile(r"^(domain|use)/[a-z0-9][a-z0-9-]*(?:/[a-z0-9][a-z0-9-]*)*$")
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 DEFAULT_VERSION_URL = (
     "https://raw.githubusercontent.com/geekybobz/markdown-protocol/main/pyproject.toml"
 )
@@ -694,7 +694,10 @@ def check_collection(
         findings.append(Finding("error", ".", "no entry found; use README.md, SKILL.md, INDEX.md, or --entry"))
     else:
         reachable = reachable_files(entry_path, adjacency)
-        for orphan in sorted(file_set - reachable):
+        generated_paths = {
+            path for path, text in texts.items() if properties(text).get("role") == "generated"
+        }
+        for orphan in sorted(file_set - reachable - generated_paths):
             findings.append(
                 Finding(
                     "warning" if adoption else "error",
@@ -729,11 +732,14 @@ def render_graph_report(root: Path, *, entry: str | None = None, topic: str | No
     typed: dict[Path, dict[str, set[Path]]] = {
         path.resolve(): {label: set() for label in CONNECTION_LABELS} for path in files
     }
+    generated_paths: set[Path] = set()
     for path in files:
         try:
             text = read_utf8(path)
         except ValueError as exc:
             raise ValueError(f"{path.relative_to(root)}: {exc}") from exc
+        if properties(text).get("role") == "generated":
+            generated_paths.add(path.resolve())
         for _, _, resolved in local_links(path, root, text):
             if resolved in file_set:
                 adjacency[path.resolve()].add(resolved)
@@ -771,7 +777,7 @@ def render_graph_report(root: Path, *, entry: str | None = None, topic: str | No
     entry_path = choose_entry(root, entry)
     if not entry_path:
         raise ValueError("no entry found; use README.md, SKILL.md, INDEX.md, or --entry")
-    orphans = sorted(file_set - reachable_files(entry_path, adjacency))
+    orphans = sorted(file_set - reachable_files(entry_path, adjacency) - generated_paths)
     lines.extend(["", "Orphans:"])
     if orphans:
         lines.extend(f"- {path.relative_to(root).as_posix()}" for path in orphans)

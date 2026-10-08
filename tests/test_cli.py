@@ -4,6 +4,7 @@ import json
 import subprocess
 import sys
 import tempfile
+import tomllib
 import unittest
 from pathlib import Path
 
@@ -72,6 +73,21 @@ class CliTests(unittest.TestCase):
             second = self.run_cli("init", str(root), "--title", "Changed")
             self.assertEqual(1, second.returncode)
 
+    def test_generated_inventory_round_trip_remains_clean(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "course"
+            initialized = self.run_cli("init", str(root), "--title", "Control Notes")
+            self.assertEqual(0, initialized.returncode, initialized.stdout + initialized.stderr)
+            written = self.run_cli("inventory", str(root), "--write")
+            self.assertEqual(0, written.returncode, written.stdout + written.stderr)
+            checked = self.run_cli("inventory", str(root), "--check")
+            self.assertEqual(0, checked.returncode, checked.stdout + checked.stderr)
+            verified = self.run_cli("verify", str(root), "--inventory", "INVENTORY.md")
+            self.assertEqual(0, verified.returncode, verified.stdout + verified.stderr)
+            graph = self.run_cli("graph", str(root), "--format", "text")
+            self.assertEqual(0, graph.returncode, graph.stdout + graph.stderr)
+            self.assertIn("Orphans:\n- None.", graph.stdout)
+
     def test_fix_is_dry_run_by_default_and_apply_adds_only_footer(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -110,6 +126,8 @@ class CliTests(unittest.TestCase):
         version = self.run_cli("version")
         self.assertEqual(0, version.returncode)
         self.assertRegex(version.stdout, r"^mdp \d+\.\d+\.\d+")
+        metadata = tomllib.loads((PACKAGE / "pyproject.toml").read_text(encoding="utf-8"))
+        self.assertEqual(f"mdp {metadata['project']['version']}\n", version.stdout)
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             (root / "README.md").write_text("# Collection\n", encoding="utf-8")

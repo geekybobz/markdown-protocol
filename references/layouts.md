@@ -36,8 +36,8 @@ table, file tree, text flow, or diagram. A diagram is not mandatory. When used,
 include a text fallback and keep it within the visual reliability budget.
 
 Structured properties and generated `INVENTORY.md` are optional tooling for a
-collection that needs an exhaustive machine-checkable listing. They never
-replace the authored Front Door, Map, or human `INDEX.md`.
+collection that needs an exhaustive deterministic listing. They never replace
+the authored Front Door, Map, or `INDEX.md`.
 
 ## Details
 
@@ -115,14 +115,14 @@ Optional explanation. No new rule begins here.
 
 The Map is curated by intention; it is not exhaustive.
 
-### Human Index template
+### Topic Index template
 
 ```markdown
 # Topic Index
 
 ## Foundations
 
-- [Topic A](topics/topic-a.md) — one-line human orientation.
+- [Topic A](topics/topic-a.md) — one-line orientation.
 
 ## Workflows
 
@@ -133,7 +133,7 @@ The Map is curated by intention; it is not exhaustive.
 [← Previous](MAP.md) · [⌂ Home](README.md) · [Next →](topics/topic-a.md)
 ```
 
-The human Index is complete but semantically grouped and textually light. An
+The authored Index is complete but semantically grouped and textually light. An
 optional generated `INVENTORY.md` is a separate exhaustive projection.
 
 ### Topic template

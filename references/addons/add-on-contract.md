@@ -25,9 +25,9 @@ Each add-on is one focused reference that declares:
 | Composition | Which domain skill or tool owns subject correctness? |
 | Boundaries | What must the add-on never require or authorize? |
 
-The declaration describes capabilities, not a quota. The model analyzes the
-topic and proposes the minimum useful combination; the user reviews the actual
-structure through the core workflow.
+The declaration describes capabilities, not a quota. Analyze the topic and
+propose the minimum useful combination; the user reviews the actual structure
+through the core workflow.
 
 ## Extension points
 

@@ -5,8 +5,8 @@ description: Use whenever requested work creates, edits, reviews, or restructure
 
 # Markdown Protocol
 
-Build a compact model entry with optional human depth. Keep dependable rules
-and facts compact.
+Build a linked structure with compact entry points and optional depth. Keep
+dependable rules and facts compact.
 
 ## Load only what the task needs
 
@@ -24,8 +24,8 @@ reasoning only when needed.
   [structured inventory](references/structured-inventory.md). `deepen` or
   `check` mode: [named commands](references/named-commands.md).
 
-Human browsing starts from [INDEX.md](INDEX.md); ordinary model work does not.
-Open only the relevant formatting example, never the whole gallery.
+Use [INDEX.md](INDEX.md) for orientation or maintenance; ordinary tasks do not
+require it. Open only the relevant formatting example, never the whole gallery.
 
 ## Core behavior
 

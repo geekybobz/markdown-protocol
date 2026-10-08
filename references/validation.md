@@ -36,7 +36,7 @@ and anything skipped or unverified.
 ### Structure and ownership
 
 - An identifiable Front Door exists.
-- Maps route by intention; human indexes map structure; generated inventories
+- Maps route by intention; authored indexes map structure; generated inventories
   remain replaceable projections.
 - Topics are reachable and independently meaningful.
 - Short supporting material has not been fragmented into orphans.
@@ -61,12 +61,13 @@ and anything skipped or unverified.
 - No equation delimiter or macro is called dependable from source appearance
   alone; record the application, version, syntax, and result.
 
-### Human and model checks
+### Entry and depth checks
 
-A human can understand the purpose, navigate without knowing the directory
-tree, and edit normal content without advanced tooling. A model can orient from
-the entry, load only relevant material, distinguish authority from optional
-detail, and follow links without scanning the entire repository.
+The purpose is understandable without knowing the directory tree, and normal
+content remains editable without advanced tooling. The compact entry supports
+selective access, while linked depth explains only what the current task or
+reader needs. Authority remains distinguishable from optional detail without a
+full repository scan.
 
 ---
 

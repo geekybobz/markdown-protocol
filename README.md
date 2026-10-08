@@ -7,13 +7,14 @@ read_when: Start here when installing, sharing, or browsing the package.
 # Markdown Protocol
 
 Markdown Protocol keeps one linked documentation structure compact at its
-edge and explanatory at depth. It includes a Codex skill, human learning
-guides, a deterministic `mdp` command, and a reproducible macOS VS Code pack.
+edge and explanatory at depth. It includes a Codex skill, linked learning
+references, a deterministic `mdp` command, and a reproducible macOS VS Code
+pack.
 
 ## Start here
 
-- Models and agents: [skill entry](SKILL.md)
-- Human readers: [topic index](INDEX.md)
+- Apply the protocol: [compact operational entry](SKILL.md)
+- Browse or maintain the package: [topic index](INDEX.md)
 - New collection: `mdp init my-notes --title "My notes"`
 - Existing collection: `mdp status .`, then `mdp adopt .`
 - Normal verification: `mdp verify .`

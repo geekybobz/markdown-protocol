@@ -7,12 +7,11 @@ governance.
 
 ## Outcome
 
-Create one package that is cheap for a model to enter and easy for a human to
-browse:
+Create one package that starts compactly and opens into relevant depth:
 
 ```text
-model -> SKILL.md -> one selected reference
-human -> INDEX.md -> package map -> relevant file
+apply task -> SKILL.md -> one selected reference
+orient or maintain -> INDEX.md -> package map -> relevant file
 ```
 
 The target skill remains authoritative for domain behavior. This add-on owns
@@ -23,9 +22,9 @@ only the Markdown layers, navigation, portability, and related validation.
 | field | declaration |
 |---|---|
 | Trigger | Creating, documenting, or substantially restructuring a skill package with Markdown; not ordinary use of an existing skill |
-| Blocks | Machine entry, human route map, responsibility split, package profile, migration plan, and maintenance boundaries |
+| Blocks | Operational entry, navigation map, responsibility split, package profile, migration plan, and maintenance boundaries |
 | Layout variants | Minimal, Routed, Navigable, and Tool-bearing package profiles |
-| Generated views | Repository-owned manifests, graph nodes, or human indexes produced only through their canonical generators |
+| Generated views | Repository-owned manifests, graph nodes, or generated indexes produced only through their canonical generators |
 | Checks | Native metadata, selective loading, links, footers, registry state, generated views, adapters, and token budget |
 | Composition | Target skill owns domain behavior; native skill guidance owns package validity; orchestrator owns lifecycle |
 | Boundaries | No duplicate governance, implicit migration, invented files, or extra public skills |
@@ -36,7 +35,7 @@ only the Markdown layers, navigation, portability, and related validation.
 |---|---|
 | Target skill | domain behavior, methods, and technical correctness |
 | Native skill-creation guidance | valid package form, metadata, references, scripts, and assets |
-| Markdown Protocol | document layers, human index, navigation, tone, portability, and footers |
+| Markdown Protocol | document layers, authored index, navigation, tone, portability, and footers |
 | Skills Orchestrator | selection, composition, repository lifecycle, change control, and verification |
 | Registry | public discovery, activation, and capability metadata |
 | Generated views | replaceable projections from canonical sources |
@@ -52,29 +51,29 @@ Choose the smallest profile that gives each file a distinct job.
 |---|---|---|
 | Minimal | `SKILL.md`; optional `agents/openai.yaml` | one compact entry is sufficient |
 | Routed | `SKILL.md` plus focused references | conditional detail should load selectively |
-| Navigable | Routed profile plus `INDEX.md` | human navigation is a separate job |
+| Navigable | Routed profile plus `INDEX.md` | orientation and maintenance need a separate map |
 | Tool-bearing | Navigable or Routed profile plus necessary scripts or assets | repeated mechanics or output resources justify them |
 
-`INDEX.md` is expected for a multi-file package when a human cannot understand
-the package routes from the compact entry without scanning the directory. Do
-not add it to a genuinely minimal package merely for symmetry.
+`INDEX.md` is expected for a multi-file package when its routes cannot be
+understood from the compact entry without scanning the directory. Do not add it
+to a genuinely minimal package merely for symmetry.
 
-## Two front doors
+## Entry roles
 
-### Machine entry: `SKILL.md`
+### Operational entry: `SKILL.md`
 
 Keep the required entry compact. It owns:
 
 - discriminating selection metadata;
 - essential behavior and boundaries;
 - the minimum routing table needed to choose a focused reference;
-- a link to `INDEX.md` for human browsing or package maintenance, explicitly
+- a link to `INDEX.md` for orientation or package maintenance, explicitly
   marked as unnecessary during ordinary task execution.
 
 Do not turn `SKILL.md` into a complete directory listing or duplicate detailed
 references there.
 
-### Human entry: `INDEX.md`
+### Navigation entry: `INDEX.md`
 
 The index owns:
 
@@ -136,7 +135,7 @@ change one at a time only when the user names and approves their scope.
 ## Per-skill migration
 
 1. Inspect the named package entry and bounded file map.
-2. Identify machine entry, human routes, authoritative owners, conditional
+2. Identify the operational entry, navigation routes, authoritative owners, conditional
    references, tools, generated files, and platform overlays.
 3. Select a package profile and propose exact additions, moves, link changes,
    generated consumers, and checks.

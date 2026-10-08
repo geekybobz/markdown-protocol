@@ -16,7 +16,7 @@ Where am I?
 ```
 
 The result should give a new reader a reliable route into the code while
-remaining compact enough for maintenance and selective model loading.
+remaining compact enough for maintenance and selective loading.
 
 ## Add-on declaration
 

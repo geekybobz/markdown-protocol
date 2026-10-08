@@ -52,7 +52,7 @@ implementation.
 
 ## Authored and generated views
 
-Keep `README.md`, `MAP.md`, and the human `INDEX.md` authored. Generate the
+Keep `README.md`, `MAP.md`, and `INDEX.md` authored. Generate the
 exhaustive `INVENTORY.md` from properties. Deep and generated notes appear
 under its Optional group, and the inventory excludes itself to avoid recursive
 output.

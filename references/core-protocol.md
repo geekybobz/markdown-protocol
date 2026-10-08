@@ -2,8 +2,8 @@
 
 ## In brief
 
-Use one linked structure at several depths. Compact model routes and optional
-human explanations share owners; never maintain parallel copies.
+Use one linked structure at several depths. Compact routes and optional
+explanations share owners; never maintain parallel copies.
 
 ## Invariants
 
@@ -11,8 +11,8 @@ human explanations share owners; never maintain parallel copies.
    topics without a full scan.
 2. Every important statement has one authoritative owner; outer layers
    summarize and link instead of duplicating it.
-3. Model routes and human depth share owners and links; central or generated
-   views only point to them.
+3. Compact routes and explanatory depth share owners and links; central or
+   generated views only point to them.
 4. Essential meaning remains in portable text. Visuals and interactive features
    supplement it.
 5. A file exists only when it has an independently useful job. The structure
@@ -48,7 +48,7 @@ easy to understand and maintain.
 
 Structured properties and generated inventory are optional. When a collection
 opts in, follow the complete [Structured Inventory](structured-inventory.md)
-contract; the authored Front Door or human `INDEX.md` remains semantic.
+contract; the authored Front Door or `INDEX.md` remains semantic.
 
 Optional tags use only `domain/...` for subject matter and `use/...` for reader
 intent. Tags filter files; they never replace explicit navigation or typed
