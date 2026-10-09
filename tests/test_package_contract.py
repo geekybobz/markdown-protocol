@@ -190,6 +190,7 @@ class PackageContractTests(unittest.TestCase):
         research = self.read("references/addons/research-notes.md")
         research_compact = " ".join(research.split())
         self.assertIn("[research-notes.md](research-notes.md)", routes)
+        self.assertIn("Research Notes Add-on", self.read("INDEX.md"))
         self.assertIn("citation_key", research)
         for status in ("exact", "empirical", "numerical", "proposed", "uncertain"):
             self.assertIn(f"| {status} |", research)
