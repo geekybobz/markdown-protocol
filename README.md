@@ -24,6 +24,9 @@ Install from a clone with `python3 -m pip install .`, or use an isolated tool
 manager with `uv tool install .`. The package has no runtime dependencies
 outside the Python standard library. Run `mdp doctor .` after installation.
 Updates are never checked in the background: run `mdp update check` explicitly.
+Update a clone with `git pull --ff-only` after reading [the changelog](CHANGELOG.md), and
+roll back with `git revert` or a checkout of an earlier tag. Skills AI integration is
+optional; this repository needs nothing from it.
 
 ## Releases
 
