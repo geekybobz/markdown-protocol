@@ -208,6 +208,20 @@ This note expands [...](...).
 Deep notes are already optional depth and do not need another `## Details`
 boundary. Previous and Next express a curated sequence, never filename order.
 
+### Converting a collection split by audience
+
+When an existing collection keeps parallel versions of the same content for
+different readers, convert it instead of extending it:
+
+1. Map every section of the parallel copy to the file that owns its subject.
+2. Move explanation that exists only in the copy into that owner's
+   `## Details` section or a linked deep note.
+3. Replace duplicated passages with a link to the owner.
+4. Remove the copy, and any rule, check or generator that forced edits into
+   it, in the same reviewed change.
+5. Verify that links resolve and that every removed section has a named new
+   home.
+
 ---
 
 [← Previous](review-workflow.md) · [⌂ Home](../INDEX.md) · [Next →](markdown-patterns.md)

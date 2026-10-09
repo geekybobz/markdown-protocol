@@ -4,7 +4,7 @@ Validate the exact changed collection in proportion to its complexity.
 
 ## Compact completion check
 
-- Match the reviewed proposal; preserve user edits and one owner per fact; give each file a distinct job.
+- Match the reviewed proposal; preserve user edits, one owner per fact, and distinct file jobs; extend no parallel audience copy.
 - Keep the smallest useful profile. Ensure rules, prerequisites, limitations, and dependable conclusions appear above
   the first `## Details`.
 - Treat roughly 30 compact Topic lines or 60 Front Door lines as review warnings, not failures.

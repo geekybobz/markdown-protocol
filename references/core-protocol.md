@@ -22,7 +22,7 @@ explanations share owners; never maintain parallel copies.
    weaken, or replace a rule.
 7. Generated views are marked, reproducible, and non-authoritative.
 8. Useful existing conventions and user edits survive unless they obstruct
-   these invariants.
+   these invariants. A split by audience always obstructs them.
 9. Markdown writes follow a user-reviewed design proportional to the change.
 10. Every authored page ends with Home navigation; Previous and Next appear only
    for an intentional reading order.
@@ -31,6 +31,15 @@ explanations share owners; never maintain parallel copies.
 12. The final nonblank footer pair is a horizontal rule (`---`) followed by a
    line containing `[⌂ Home](...)`; generated pages receive it from their
    generator.
+13. Layers are defined by depth and role, never by who reads them. No file,
+   folder, heading, property or description is labelled human-, machine-,
+   model- or agent-facing.
+14. When updating an existing collection, keep or restore that layering. Add
+   content to its single owner at the right depth (rules above `## Details`,
+   explanation below it or in a linked deep note), and never extend a parallel
+   audience copy. If the collection is split by audience, or a project rule
+   requires a parallel copy, name the conflict in the proposal, offer the
+   conversion, and wait for the decision.
 
 ## Information roles
 
@@ -124,6 +133,8 @@ claim otherwise.
 - Tags standing in for explicit relationships.
 - A visual graph with no reader question.
 - A generated file that people must edit by hand.
+- Parallel versions of the same content split by audience, kept in step by hand
+  or by a rule that forces every edit into both.
 
 ---
 

@@ -37,7 +37,7 @@ CONNECTION_LINE_RE = re.compile(r"^[-*+]\s+([^:]+):\s*(.*?)\s*$")
 NEXT_FOOTER_RE = re.compile(r"\[Next →\]\(([^)]+)\)")
 PREVIOUS_FOOTER_RE = re.compile(r"\[← Previous\]\(([^)]+)\)")
 TAG_RE = re.compile(r"^(domain|use)/[a-z0-9][a-z0-9-]*(?:/[a-z0-9][a-z0-9-]*)*$")
-VERSION = "0.2.0"
+VERSION = "0.3.0"
 DEFAULT_VERSION_URL = (
     "https://raw.githubusercontent.com/geekybobz/markdown-protocol/main/pyproject.toml"
 )

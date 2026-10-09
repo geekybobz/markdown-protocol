@@ -31,10 +31,11 @@ Open only the relevant formatting example, never the whole gallery.
   `#> md_deepen`, and `#> md_check` select declared modes. Reading Markdown as input alone is not activation.
 - Announce the protocol. Before writing, inspect the relevant structure, propose in proportion to impact,
   and wait for agreement; read-only review needs no invented gate. Pause only for material expansion.
-- Preserve conventions and later user edits. Use the smallest clear layout and one owner per important fact;
-  outer layers summarize and link.
+- Layer by depth, never by audience: any reader may open any layer, and nothing is labelled human-, machine- or
+  agent-facing. When updating, keep useful conventions and user edits, but put new content in its one owner at the
+  right depth, never in a parallel audience copy; report such a split, or a rule forcing one, in the proposal.
 - Put rules, prerequisites, limitations, and dependable conclusions above the first `## Details`;
-  deeper material may explain but never change them.
+  deeper material may explain but never change them. Outer layers summarize and link.
 - Prefer relative links and portable text. Every authored page ends with the Home footer;
   use Previous and Next only for a real reading order.
 - Structured inventory is opt-in; the authored Front Door or `INDEX.md` stays semantic.

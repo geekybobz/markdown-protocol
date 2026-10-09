@@ -78,7 +78,7 @@ class PackageContractTests(unittest.TestCase):
         self.assertIn("A diagram is not mandatory", layouts)
         self.assertIn("nontrivial Compact profile", compact_layouts)
         self.assertIn("Patterns used", workflow)
-        self.assertIn("Omit the line for\nordinary headings", workflow)
+        self.assertIn("omit the line for ordinary headings", " ".join(workflow.split()).lower())
 
     def test_addon_contract_keeps_extensions_optional_and_bounded(self) -> None:
         entry = self.read("SKILL.md")
@@ -452,6 +452,43 @@ class PackageContractTests(unittest.TestCase):
         ):
             with self.subTest(name=name):
                 self.assertNotIn("[[", self.read(f"references/{name}"))
+
+    def test_layers_are_defined_by_depth_never_by_audience(self) -> None:
+        def head(relative: str) -> str:
+            return " ".join(self.read(relative).split("\n## Details", 1)[0].split())
+
+        entry = " ".join(self.read("SKILL.md").split())
+        core = head("references/core-protocol.md")
+
+        self.assertIn("Layer by depth, never by audience", entry)
+        self.assertIn("never in a parallel audience copy", entry)
+        self.assertIn("report such a split, or a rule forcing one, in the proposal", entry)
+        self.assertIn("never by who reads them", core)
+        self.assertIn("A split by audience always obstructs them", core)
+        self.assertIn("keep or restore that layering", core)
+        self.assertIn("name the conflict in the proposal, offer the conversion", core)
+        self.assertIn(
+            "including any split by audience or rule that forces one",
+            head("references/review-workflow.md"),
+        )
+        self.assertIn("extend no parallel audience copy", head("references/validation.md"))
+        self.assertIn(
+            "### Converting a collection split by audience", self.read("references/layouts.md")
+        )
+
+    def test_audience_labels_appear_only_where_they_are_forbidden(self) -> None:
+        label = re.compile(r"\b(?:human|machine|model|agent)-facing\b")
+        allowed = {"SKILL.md", "references/core-protocol.md"}
+        for path in PACKAGE.rglob("*.md"):
+            relative = path.relative_to(PACKAGE).as_posix()
+            if any(part.startswith(".") for part in path.relative_to(PACKAGE).parts):
+                continue
+            for paragraph in re.split(r"\n\s*\n", path.read_text(encoding="utf-8")):
+                if not label.search(paragraph):
+                    continue
+                with self.subTest(path=relative):
+                    self.assertIn(relative, allowed)
+                    self.assertRegex(paragraph.lower(), r"never|nothing is labelled")
 
 
 if __name__ == "__main__":
